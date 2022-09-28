@@ -46,4 +46,3 @@ ifeq (, $(shell which pre-commit))
 else
 	pre-commit run -a
 endif
-

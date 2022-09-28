@@ -74,8 +74,3 @@ repos:
   - id: flake8
     exclude: |
       (?x)^(.*templates.*)$
-- repo: https://github.com/jumanjihouse/pre-commit-hooks
-  rev: 3.0.0
-  hooks:
-  - id: shellcheck
-  - id: shfmt

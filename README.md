@@ -17,4 +17,3 @@ all-repos-clone
 ```bash
 ./bin/autofix.sh --help
 ```
-

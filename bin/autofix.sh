@@ -2,4 +2,4 @@
 set -e
 # shellcheck source=/dev/null
 source ~/.local/pipx/venvs/all-repos/bin/activate
-python -m autofix "$@"
+python -m autofix $@

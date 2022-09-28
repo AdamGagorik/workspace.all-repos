@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Custom
+repos
+.idea
+repos.json
+repos_filtered.json

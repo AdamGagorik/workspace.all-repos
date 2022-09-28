@@ -78,4 +78,3 @@ repos:
   rev: 3.0.0
   hooks:
   - id: shellcheck
-  - id: shfmt

@@ -25,7 +25,8 @@ def arguments():
     )
 
     parser.add_argument(
-        "-b" "--branch",
+        "-b",
+        "--branch",
         dest="branch",
         default="update",
         help="git branch name for change",
@@ -33,7 +34,8 @@ def arguments():
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
-        "-g" "--grep",
+        "-g",
+        "--grep",
         dest="grep",
         default=None,
         nargs=2,
@@ -45,9 +47,8 @@ def arguments():
         "-f",
         "--fixer",
         dest="fixer",
-        default=fixers.base.Fixer,
+        default="base",
         choices=fixers.FIXERS.keys(),
-        type=lambda v: fixers.FIXERS[v],
         help="The logic to use to fix files",
     )
 
@@ -98,8 +99,8 @@ def main():
         repos,
         config=config,
         commit=commit,
-        apply_fix=args.fixer.apply,
-        check_fix=args.fixer.check,
+        apply_fix=fixers.FIXERS[args.fixer].apply,
+        check_fix=fixers.FIXERS[args.fixer].check,
         autofix_settings=autofix_settings,
     )
 

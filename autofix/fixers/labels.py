@@ -173,7 +173,6 @@ class Fixer(Base):
             elif kind == "delete":
                 if self.force:
                     self._run_command(kind, "gh", "label", "delete", data["old_name"], "--confirm")
-                    raise NotImplementedError
 
             elif kind == "rename":
                 self._run_command(kind, "gh", "label", "edit", data["old_name"], "--name", data["new_name"])

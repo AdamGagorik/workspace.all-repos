@@ -1,12 +1,12 @@
-import logging
-import os
+import dataclasses
 
 
+@dataclasses.dataclass()
 class Fixer:
-    @staticmethod
-    def apply():
-        logging.info("apply fix for %s", os.getcwd())
+    force: bool = False
 
-    @staticmethod
-    def check(**kwargs):
-        logging.info("check fix for %s", os.getcwd())
+    def apply(self):
+        pass
+
+    def check(self, **kwargs):
+        pass

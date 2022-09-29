@@ -1,3 +1,4 @@
+import argparse
 import json
 import logging
 import subprocess
@@ -110,33 +111,46 @@ OPS = ("skip", "delete", "rename", "color", "description")
 
 
 class Fixer(Base):
-    @staticmethod
-    def apply():
+    def apply(self):
         existing = fetch()
         for command, data in sorted(remap(existing, **LABELS), key=lambda x: (OPS.index(x[0]), x[1]["new_name"])):
             logging.info("%s %s", command, data)
 
             if command == "delete":
-                raise NotImplementedError
+                if self.force:
+                    raise NotImplementedError
 
             elif command == "rename":
                 name = data["new_name"]
-                subprocess.check_call(["gh", "label", "edit", data["new_name"], "--name", f"{name}"])
+                command = ["gh", "label", "edit", data["new_name"], "--name", f"{name}"]
+                logging.debug(" ".join(command))
+                if self.force:
+                    subprocess.check_call(command)
 
             elif command == "color":
                 color = data["new_color"].lstrip("#")
-                subprocess.check_call(["gh", "label", "edit", data["new_name"], "--color", f"{color}"])
+                command = ["gh", "label", "edit", data["new_name"], "--color", f"{color}"]
+                logging.debug(" ".join(command))
+                if self.force:
+                    subprocess.check_call(command)
 
             elif command == "description":
                 description = data["new_desc"]
-                subprocess.check_call(["gh", "label", "edit", data["new_name"], "--description", f"{description}"])
+                command = ["gh", "label", "edit", data["new_name"], "--description", f"{description}"]
+                logging.debug(" ".join(command))
+                if self.force:
+                    subprocess.check_call(command)
 
 
 def main():
-    Fixer.apply()
-    Fixer.check()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--force", action="store_true")
+    opts = parser.parse_args()
+    fixer = Fixer(force=opts.force)
+    fixer.apply()
+    fixer.check()
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     raise SystemExit(main())

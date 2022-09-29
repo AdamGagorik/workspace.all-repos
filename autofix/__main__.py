@@ -99,8 +99,8 @@ def main():
         repos,
         config=config,
         commit=commit,
-        apply_fix=fixers.FIXERS[args.fixer].apply,
-        check_fix=fixers.FIXERS[args.fixer].check,
+        apply_fix=fixers.FIXERS[args.fixer](force=not args.dry_run).apply,
+        check_fix=fixers.FIXERS[args.fixer](force=not args.dry_run).check,
         autofix_settings=autofix_settings,
     )
 

@@ -103,15 +103,13 @@ class Fixer(Base):
         existing = fetch()
         for kind, data in CommandGenerator.commands(*existing):
             if kind == "create":
-                if self.force:
-                    color, description = data["new_color"].lstrip("#"), data["new_desc"]
-                    self._run_command(
-                        kind, "gh", "label", "create", data["old_name"], "--description", description, "--color", color
-                    )
+                color, description = data["new_color"].lstrip("#"), data["new_desc"]
+                self._run_command(
+                    kind, "gh", "label", "create", data["old_name"], "--description", description, "--color", color
+                )
 
             elif kind == "delete":
-                if self.force:
-                    self._run_command(kind, "gh", "label", "delete", data["old_name"], "--confirm")
+                self._run_command(kind, "gh", "label", "delete", data["old_name"], "--confirm")
 
             elif kind == "rename":
                 self._run_command(kind, "gh", "label", "edit", data["old_name"], "--name", data["new_name"])

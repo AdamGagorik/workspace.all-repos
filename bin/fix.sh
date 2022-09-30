@@ -7,4 +7,4 @@ if [ $# -eq 0 ]
 fi
 # shellcheck source=/dev/null
 source ~/.local/pipx/venvs/all-repos/bin/activate
-python -m autofix.fixers.$1 "${@:2}"
+python -m autofix.fixers."$1" "${@:2}"

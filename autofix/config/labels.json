@@ -1,0 +1,67 @@
+{
+    "bug": {
+        "description": "Something isn't working correctly",
+        "color": "#d73a4a",
+        "alias": []
+    },
+    "documentation": {
+        "description": "Improvements to the documentation",
+        "color": "#D4C5F9",
+        "alias": []
+    },
+    "enhancement": {
+        "description": "New features or algorithm changes",
+        "color": "#BFDADC",
+        "alias": ["enhancements"]
+    },
+    "configs": {
+        "description": "Configuration related changes",
+        "color": "#2EAB76",
+        "alias": []
+    },
+    "testing": {
+        "description": "Unit test related changes",
+        "color": "#F9D0C4",
+        "alias": []
+    },
+    "refactoring": {
+        "description": "Code changes without behavior changes",
+        "color": "#BFD4F2",
+        "alias": []
+    },
+    "⚠️ DoNotMerge": {
+        "description": "Do not merge this pull request yet!",
+        "color": "#3A3D46",
+        "alias": ["DoNotMerge"]
+    },
+    "🚧 REBUILD": {
+        "description": "The docker image or environment must be rebuilt",
+        "color": "#3A3D46",
+        "alias": ["REBUILD"]
+    },
+    "dependencies": {
+        "description": "Pull requests that update a dependency file",
+        "color": "#1D76DB",
+        "alias": []
+    },
+    "GitHubAction": {
+        "description": "Pull requests that update GitHub Actions CI/CD",
+        "color": "#555555",
+        "alias": ["github_actions"]
+    },
+    "Python": {
+        "description": "Pull requests that update Python dependencies",
+        "color": "#555555",
+        "alias": ["python"]
+    },
+    "CI/CD": {
+        "description": "Updates to continuous integration or delivery",
+        "color": "#FBCA04",
+        "alias": []
+    },
+    "wontfix": {
+        "description": "Will not fix",
+        "color": "#ffffff",
+        "alias": []
+    }
+}

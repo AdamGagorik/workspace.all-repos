@@ -1,79 +1,16 @@
-import argparse
 import json
 import logging
 import subprocess
 from collections.abc import Iterator
 
+from autofix import CONFIG
+
 from .base import Fixer as Base
 
 
-LABELS = {
-    "bug": {
-        "description": "Something isn't working correctly",
-        "color": "#d73a4a",
-        "alias": [],
-    },
-    "documentation": {
-        "description": "Improvements to the documentation",
-        "color": "#D4C5F9",
-        "alias": [],
-    },
-    "enhancement": {
-        "description": "New features or algorithm changes",
-        "color": "#BFDADC",
-        "alias": ["enhancements"],
-    },
-    "configs": {
-        "description": "Configuration related changes",
-        "color": "#2EAB76",
-        "alias": [],
-    },
-    "testing": {
-        "description": "Unit test related changes",
-        "color": "#F9D0C4",
-        "alias": [],
-    },
-    "refactoring": {
-        "description": "Code changes without behavior changes",
-        "color": "#BFD4F2",
-        "alias": [],
-    },
-    "⚠️ DoNotMerge": {
-        "description": "Do not merge this pull request yet!",
-        "color": "#3A3D46",
-        "alias": ["DoNotMerge"],
-    },
-    "🚧 REBUILD": {
-        "description": "The docker image or environment must be rebuilt",
-        "color": "#3A3D46",
-        "alias": ["REBUILD"],
-    },
-    "dependencies": {
-        "description": "Pull requests that update a dependency file",
-        "color": "#1D76DB",
-        "alias": [],
-    },
-    "GitHubAction": {
-        "description": "Pull requests that update GitHub Actions CI/CD",
-        "color": "#555555",
-        "alias": ["github_actions"],
-    },
-    "Python": {
-        "description": "Pull requests that update Python dependencies",
-        "color": "#555555",
-        "alias": ["python"],
-    },
-    "CI/CD": {
-        "description": "Updates to continuous integration or delivery",
-        "color": "#FBCA04",
-        "alias": [],
-    },
-    "wontfix": {
-        "description": "Will not fix",
-        "color": "#ffffff",
-        "alias": [],
-    },
-}
+def get_labels():
+    with CONFIG.joinpath("labels.json").open("r") as stream:
+        return json.load(stream)
 
 
 def fetch() -> dict:
@@ -105,20 +42,22 @@ class CommandGenerator:
         """
         old_used = set()
         new_used = set()
+        labels = get_labels()
+
         for old_data in existing:
             old_name = old_data["name"]
 
             # skip
-            if old_name in LABELS:
+            if old_name in labels:
                 new_name = old_name
                 old_used.add(old_name)
                 new_used.add(new_name)
                 yield "skip", dict(old_name=old_name, new_name=new_name)
-                yield from cls._generate_label_property_commands(new_name, old_data, LABELS[old_name])
+                yield from cls._generate_label_property_commands(new_name, old_data, labels[old_name])
 
             # rename
             else:
-                for new_name, new_data in LABELS.items():
+                for new_name, new_data in labels.items():
                     if old_name in new_data["alias"]:
                         old_used.add(old_name)
                         new_used.add(new_name)
@@ -134,7 +73,7 @@ class CommandGenerator:
                 new_used.add(new_name)
                 yield "delete", dict(old_name=old_name, new_name=new_name)
 
-        for new_name, new_data in LABELS.items():
+        for new_name, new_data in labels.items():
             if new_name not in new_used:
                 old_name = new_name
                 old_used.add(old_name)
@@ -164,15 +103,13 @@ class Fixer(Base):
         existing = fetch()
         for kind, data in CommandGenerator.commands(*existing):
             if kind == "create":
-                if self.force:
-                    color, description = data["new_color"].lstrip("#"), data["new_desc"]
-                    self._run_command(
-                        kind, "gh", "label", "create", data["old_name"], "--description", description, "--color", color
-                    )
+                color, description = data["new_color"].lstrip("#"), data["new_desc"]
+                self._run_command(
+                    kind, "gh", "label", "create", data["old_name"], "--description", description, "--color", color
+                )
 
             elif kind == "delete":
-                if self.force:
-                    self._run_command(kind, "gh", "label", "delete", data["old_name"], "--confirm")
+                self._run_command(kind, "gh", "label", "delete", data["old_name"], "--confirm")
 
             elif kind == "rename":
                 self._run_command(kind, "gh", "label", "edit", data["old_name"], "--name", data["new_name"])
@@ -191,15 +128,5 @@ class Fixer(Base):
             subprocess.check_call(command)
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--force", action="store_true")
-    opts = parser.parse_args()
-    fixer = Fixer(force=opts.force)
-    fixer.apply()
-    fixer.check()
-
-
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, format="%(message)s")
-    raise SystemExit(main())
+    raise SystemExit(Fixer.main())

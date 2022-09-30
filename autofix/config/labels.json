@@ -1,0 +1,77 @@
+{
+  "CI/CD": {
+    "alias": [],
+    "color": "#FBCA04",
+    "description": "Updates to continuous integration or delivery"
+  },
+  "GitHubAction": {
+    "alias": [
+      "github_actions"
+    ],
+    "color": "#555555",
+    "description": "Pull requests that update GitHub Actions CI/CD"
+  },
+  "Python": {
+    "alias": [
+      "python"
+    ],
+    "color": "#555555",
+    "description": "Pull requests that update Python dependencies"
+  },
+  "bug": {
+    "alias": [],
+    "color": "#d73a4a",
+    "description": "Something isn't working correctly"
+  },
+  "configs": {
+    "alias": [],
+    "color": "#2EAB76",
+    "description": "Configuration related changes"
+  },
+  "dependencies": {
+    "alias": [],
+    "color": "#1D76DB",
+    "description": "Pull requests that update a dependency file"
+  },
+  "documentation": {
+    "alias": [],
+    "color": "#D4C5F9",
+    "description": "Improvements to the documentation"
+  },
+  "enhancement": {
+    "alias": [
+      "enhancements"
+    ],
+    "color": "#BFDADC",
+    "description": "New features or algorithm changes"
+  },
+  "refactoring": {
+    "alias": [],
+    "color": "#BFD4F2",
+    "description": "Code changes without behavior changes"
+  },
+  "testing": {
+    "alias": [],
+    "color": "#F9D0C4",
+    "description": "Unit test related changes"
+  },
+  "wontfix": {
+    "alias": [],
+    "color": "#ffffff",
+    "description": "Will not fix"
+  },
+  "\u26a0\ufe0f DoNotMerge": {
+    "alias": [
+      "DoNotMerge"
+    ],
+    "color": "#3A3D46",
+    "description": "Do not merge this pull request yet!"
+  },
+  "\ud83d\udea7 REBUILD": {
+    "alias": [
+      "REBUILD"
+    ],
+    "color": "#3A3D46",
+    "description": "The docker image or environment must be rebuilt"
+  }
+}

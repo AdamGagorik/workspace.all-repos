@@ -7,11 +7,14 @@ from all_repos.grep import repos_matching
 
 import autofix.fixers.base
 import autofix.fixers.labels
+import autofix.fixers.syncfile
 
 
+# noinspection SpellCheckingInspection
 FIXERS = {
     "base": autofix.fixers.base.Fixer,
     "labels": autofix.fixers.labels.Fixer,
+    "syncfile": autofix.fixers.syncfile.Fixer,
 }
 
 

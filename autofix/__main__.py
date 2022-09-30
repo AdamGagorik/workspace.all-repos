@@ -5,7 +5,14 @@ from typing import Callable
 from all_repos import autofix_lib
 from all_repos.grep import repos_matching
 
-from . import fixers
+import autofix.fixers.base
+import autofix.fixers.labels
+
+
+FIXERS = {
+    "base": autofix.fixers.base.Fixer,
+    "labels": autofix.fixers.labels.Fixer,
+}
 
 
 def line():
@@ -48,7 +55,7 @@ def arguments():
         "--fixer",
         dest="fixer",
         default="base",
-        choices=fixers.FIXERS.keys(),
+        choices=FIXERS.keys(),
         help="The logic to use to fix files",
     )
 
@@ -99,8 +106,8 @@ def main():
         repos,
         config=config,
         commit=commit,
-        apply_fix=fixers.FIXERS[args.fixer](force=not args.dry_run).apply,
-        check_fix=fixers.FIXERS[args.fixer](force=not args.dry_run).check,
+        apply_fix=FIXERS[args.fixer](force=not args.dry_run).apply,
+        check_fix=FIXERS[args.fixer](force=not args.dry_run).check,
         autofix_settings=autofix_settings,
     )
 

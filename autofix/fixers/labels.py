@@ -124,7 +124,7 @@ class Fixer(Base):
 
     def _run_command(self, kind, *command):
         logging.debug("[%-12s]: %s", kind.upper(), " ".join(command))
-        if self.force:
+        if self.options.force:
             subprocess.check_call(command)
 
 

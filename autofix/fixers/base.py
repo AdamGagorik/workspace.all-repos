@@ -5,7 +5,7 @@ import logging
 
 @dataclasses.dataclass()
 class Fixer:
-    force: bool = False
+    options: argparse.Namespace
 
     def apply(self):
         ...
@@ -22,8 +22,7 @@ class Fixer:
     @classmethod
     def main(cls, argv=None):
         logging.basicConfig(level=logging.DEBUG, format="%(message)s")
-        opts = cls.args().parse_args(args=argv)
-        fixer = cls(force=opts.force)
+        fixer = cls(options=cls.args().parse_args(args=argv))
         fixer.apply()
         fixer.check()
 

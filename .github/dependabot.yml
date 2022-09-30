@@ -9,3 +9,15 @@ updates:
   directory: /
   schedule:
     interval: monthly
+  labels:
+    - "CI/CD"
+    - "GitHubAction"
+- package-ecosystem: pip
+  insecure-external-code-execution: allow
+  directory: /
+  schedule:
+    interval: monthly
+  labels:
+    - "Python"
+    - "🚧 REBUILD"
+    - "dependencies"

@@ -8,4 +8,16 @@ updates:
 - package-ecosystem: github-actions
   directory: /
   schedule:
-    interval: monthly
+    interval: daily
+  labels:
+    - "CI/CD"
+    - "GitHubAction"
+- package-ecosystem: pip
+  insecure-external-code-execution: allow
+  directory: /
+  schedule:
+    interval: daily
+  labels:
+    - "Python"
+    - "🚧 REBUILD"
+    - "dependencies"

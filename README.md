@@ -27,7 +27,7 @@ all-repos-clone
 ```bash
 ./bin/autofix.sh --fixer syncfile -i --limit 1
   --apply-changes
-  --allow-missing 
-  --src a.txt 
+  --allow-missing
+  --src a.txt
   --dst b.txt
 ```

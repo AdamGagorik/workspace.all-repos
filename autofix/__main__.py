@@ -23,10 +23,15 @@ def line():
 
 
 def arguments():
-    parser = argparse.ArgumentParser(usage="python -m autofix")
+    parser = argparse.ArgumentParser(
+        usage="python -m autofix",
+        add_help=False,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     autofix_lib.add_fixer_args(parser)
 
-    parser.add_argument(
+    autofix_group = parser.add_argument_group("autofix")
+    autofix_group.add_argument(
         "-m",
         "--message",
         dest="message",
@@ -34,7 +39,7 @@ def arguments():
         help="git commit message for change",
     )
 
-    parser.add_argument(
+    autofix_group.add_argument(
         "-b",
         "--branch",
         dest="branch",
@@ -42,8 +47,8 @@ def arguments():
         help="git branch name for change",
     )
 
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
+    discover_group = autofix_group.add_mutually_exclusive_group()
+    discover_group.add_argument(
         "-g",
         "--grep",
         dest="grep",
@@ -53,7 +58,7 @@ def arguments():
         help="a (regex, file) to use when searching for repos to process",
     )
 
-    parser.add_argument(
+    autofix_group.add_argument(
         "-f",
         "--fixer",
         dest="fixer",
@@ -62,7 +67,10 @@ def arguments():
         help="The logic to use to fix files",
     )
 
-    return parser.parse_args()
+    args, remaining = parser.parse_known_args()
+    args = FIXERS[args.fixer].args(parents=[parser], usage=parser.usage)[-1].parse_args()
+
+    return args
 
 
 class Find:
@@ -109,8 +117,8 @@ def main():
         repos,
         config=config,
         commit=commit,
-        apply_fix=FIXERS[args.fixer](force=not args.dry_run).apply,
-        check_fix=FIXERS[args.fixer](force=not args.dry_run).check,
+        apply_fix=FIXERS[args.fixer](options=args).apply,
+        check_fix=FIXERS[args.fixer](options=args).check,
         autofix_settings=autofix_settings,
     )
 

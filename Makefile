@@ -19,8 +19,8 @@ CLEAN_FILES=find .                                 \
 
 .PHONY : help
 help:
-ifeq (, $(shell which bat))
-	bat README.md
+ifneq (,$(shell which mdcat))
+	mdcat README.md
 else
 	cat README.md
 endif

@@ -19,15 +19,12 @@ class Fixer(Base):
                 raise FileNotFoundError(inp_path)
 
             if not os.path.exists(out_path) and not self.options.allow_missing:
-                logging.error("[SKIP]: out path does not exist! use --create : %s", out_path)
+                logging.error("[SKIP]: out path does not exist! use --allow-missing : %s", out_path)
                 continue
-
-            if self.options.force:
+            else:
                 logging.info("cp %s %s", inp_path, out_path)
                 shutil.copy(inp_path, out_path)
                 subprocess.check_call(["git", "add", out_path])
-            else:
-                logging.error("skipping logic! use --force : cp %s %s", inp_path, out_path)
 
     @classmethod
     def args(cls, **kwargs):

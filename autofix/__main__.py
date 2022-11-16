@@ -6,6 +6,7 @@ from all_repos import autofix_lib
 from all_repos.grep import repos_matching
 
 import autofix.fixers.base
+import autofix.fixers.bcmop
 import autofix.fixers.labels
 import autofix.fixers.syncfile
 
@@ -13,6 +14,7 @@ import autofix.fixers.syncfile
 # noinspection SpellCheckingInspection
 FIXERS = {
     "base": autofix.fixers.base.Fixer,
+    "bcomp": autofix.fixers.bcmop.Fixer,
     "labels": autofix.fixers.labels.Fixer,
     "syncfile": autofix.fixers.syncfile.Fixer,
 }

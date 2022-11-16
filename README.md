@@ -18,6 +18,7 @@ all-repos-clone
 ```bash
 ./bin/autofix.sh --help
 ./bin/autofix.sh --fixer base --help
+./bin/autofix.sh --fixer bcomp --help
 ./bin/autofix.sh --fixer labels --help
 ./bin/autofix.sh --fixer syncfile --help
 ```
@@ -30,4 +31,10 @@ all-repos-clone
   --allow-missing
   --src a.txt
   --dst b.txt
+```
+
+```bash
+all-repos-sed --dry-run --limit 1 \
+'/labels:/,$d' .github/settings.yml \
+--commit-msg 'Remove labels from settings file'
 ```

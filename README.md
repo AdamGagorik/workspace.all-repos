@@ -19,6 +19,7 @@ all-repos-clone
 ./bin/autofix.sh --help
 ./bin/autofix.sh --fixer base --help
 ./bin/autofix.sh --fixer bcomp --help
+./bin/autofix.sh --fixer editPR --help
 ./bin/autofix.sh --fixer labels --help
 ./bin/autofix.sh --fixer syncfile --help
 ```
@@ -50,7 +51,7 @@ all-repos-clone
 ## Edit PRs with the given branch
 
 ```bash
-./bin/autofix.sh --fixer update_pr -i --limit 1
+./bin/autofix.sh --fixer editPR -i --limit 1
   --apply-changes
   --branch add-pr-template
   --add-label "DoNotMerge"

@@ -25,6 +25,8 @@ all-repos-clone
 
 # Examples
 
+## Copy file into repo
+
 ```bash
 ./bin/autofix.sh --fixer syncfile -i --limit 1
   --apply-changes
@@ -32,6 +34,31 @@ all-repos-clone
   --src a.txt
   --dst b.txt
 ```
+
+## Open diff tool for file
+
+```bash
+./bin/autofix.sh --fixer bcomp -i --limit 1
+  --apply-changes
+  --allow-missing
+  --branch add-pr-template
+  --message "Add PR template"
+  --src pull_request_template.md
+  --dst .github/pull_request_template.md
+```
+
+## Edit PRs with the given branch
+
+```bash
+./bin/autofix.sh --fixer update_pr -i --limit 1
+  --apply-changes
+  --branch add-pr-template
+  --add-label "DoNotMerge"
+  --add-assignee '@me'
+  --add-reviewer "@other"
+```
+
+## Run sed command on files
 
 ```bash
 all-repos-sed --dry-run --limit 1 \

@@ -7,6 +7,7 @@ from all_repos.grep import repos_matching
 
 import autofix.fixers.base
 import autofix.fixers.bcmop
+import autofix.fixers.editPR
 import autofix.fixers.labels
 import autofix.fixers.syncfile
 
@@ -17,6 +18,7 @@ FIXERS = {
     "bcomp": autofix.fixers.bcmop.Fixer,
     "labels": autofix.fixers.labels.Fixer,
     "syncfile": autofix.fixers.syncfile.Fixer,
+    "update_pr": autofix.fixers.editPR.Fixer,
 }
 
 
@@ -126,5 +128,5 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(message)s", level=logging.INFO)
+    logging.basicConfig(format="%(message)s", level=logging.DEBUG)
     raise SystemExit(main())

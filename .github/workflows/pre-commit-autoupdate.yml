@@ -18,6 +18,7 @@ jobs:
     - id: cpr
       uses: peter-evans/create-pull-request@v4.2.3
       with:
+        token: ${{ secrets.PAT }}
         add-paths: .pre-commit-config.yaml
         commit-message: '[pre-commit] automatic update'
         title: '[pre-commit] automatic update'
@@ -27,6 +28,7 @@ jobs:
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: peter-evans/enable-pull-request-automerge@v2
       with:
+        token: ${{ secrets.PAT }}
         pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
         merge-method: squash
     - id: apr

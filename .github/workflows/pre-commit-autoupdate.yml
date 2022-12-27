@@ -34,4 +34,4 @@ jobs:
       uses: juliangruber/approve-pull-request-action@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        number: ${{ steps.cpr.outputs.pull-request-number }}  
+        number: ${{ steps.cpr.outputs.pull-request-number }}

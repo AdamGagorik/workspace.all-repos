@@ -20,4 +20,5 @@ jobs:
         add-paths: .pre-commit-config.yaml
         commit-message: '[pre-commit] automatic update'
         title: '[pre-commit] automatic update'
+        branch: 'create-pull-request/pre-commit'
         body: ''

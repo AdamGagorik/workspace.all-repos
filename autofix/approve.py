@@ -48,4 +48,3 @@ for REPO in REPOS:
                             run("gh", "pr", "merge", "--squash", "--auto", "--delete-branch", N)
 
     os.chdir(WORK)
-

@@ -73,5 +73,10 @@
     ],
     "color": "#3A3D46",
     "description": "The docker image or environment must be rebuilt"
+  },
+    "build": {
+    "alias": [],
+    "color": "#C4448E",
+    "description": "Updates where added to the build system (Makefile, etc)"
   }
 }

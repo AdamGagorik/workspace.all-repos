@@ -131,6 +131,7 @@ dmypy.json
 # Custom
 repos
 .idea
+.fleet
 repos.json
 all-repos.json
 repos_filtered.json

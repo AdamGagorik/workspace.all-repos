@@ -26,6 +26,12 @@ all-repos-clone
 
 # Examples
 
+## Loop PRs and approve and/or merge them interactively
+
+```bash
+./bin/approve.sh --search "Bump OR automatic"
+```
+
 ## Copy file into repo
 
 ```bash

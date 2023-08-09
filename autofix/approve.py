@@ -4,14 +4,25 @@ import os
 import pathlib
 import subprocess
 from collections.abc import Iterator
+from functools import partial
 from itertools import chain, repeat
 from typing import Any, Callable
 
 
 def ask(
-    prompt: str, error: str = "error! answer y or n", valid: Callable[[str], bool] = lambda s: s in {"y", "n"}
+    prompt: str,
+    error: str = "error! answer y or n",
+    valid: Callable[[str], bool] = lambda s: s in {"y", "n"},
+    always: str | None = None,
 ) -> str:
     prompt = f"{prompt.strip()} "
+
+    if always is not None:
+        print(f"{prompt}{always}")
+        if not valid(always):
+            raise ValueError("{always} is not a valid answer")
+        return always
+
     answers = map(input, chain([prompt], repeat("\n".join([error, prompt]))))
     return next(filter(valid, answers))
 
@@ -26,6 +37,7 @@ def run(*cmd: str, default: Any = False, output: bool = False):
 
 def args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("-y", "--yes", action="store_true")
     parser.add_argument("--search", default="Bump OR automatic")
     return parser.parse_args()
 
@@ -42,6 +54,7 @@ def get_pr_status(pull: dict) -> Iterator[tuple[str, str]]:
 
 def main(opts: argparse.Namespace):
     work = pathlib.Path.cwd()
+    asker = partial(ask, always="y" if opts.yes else None)
     repos = [p for p in work.joinpath("repos", "syapse").glob("*") if p.is_dir()]
     for REPO in repos:
         os.chdir(work)
@@ -74,15 +87,15 @@ def main(opts: argparse.Namespace):
                 print(">>> missing status checks!")
                 for check, state in status.items():
                     print(f">>> [{int(state)}] {check}")
-                match ask("... open PR?"):
+                match asker("... open PR?"):
                     case "y":
                         run("gh", "pr", "view", "--web", number)
                 continue
 
-            match ask("... PR OK?"):
+            match asker("... PR OK?"):
                 case "y":
                     if run("gh", "pr", "review", "--approve", number).returncode == 0:
-                        match ask("... merge?"):
+                        match asker("... merge?"):
                             case "y":
                                 run("gh", "pr", "merge", "--squash", "--auto", "--delete-branch", number)
 

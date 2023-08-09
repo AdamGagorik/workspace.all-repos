@@ -42,21 +42,21 @@ repos:
   hooks:
   - id: isort
 - repo: https://github.com/asottile/yesqa
-  rev: v1.4.0
+  rev: v1.5.0
   hooks:
   - id: yesqa
 - repo: https://github.com/psf/black
-  rev: 23.3.0
+  rev: 23.7.0
   hooks:
   - id: black
 - repo: https://github.com/asottile/pyupgrade
-  rev: v3.3.1
+  rev: v3.10.1
   hooks:
   - id: pyupgrade
     args:
     - --py39-plus
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.8.0
+  rev: v2.10.0
   hooks:
   - id: pretty-format-yaml
     exclude: |
@@ -69,7 +69,7 @@ repos:
     args:
     - --autofix
 - repo: https://github.com/pycqa/flake8
-  rev: 6.0.0
+  rev: 6.1.0
   hooks:
   - id: flake8
     exclude: |

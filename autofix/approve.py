@@ -81,12 +81,12 @@ def main(opts: argparse.Namespace):
 
             number, title = pull["number"], pull["title"]
             status = dict(get_pr_status(pull))
+            for check, state in status.items():
+                print(f">>> [{int(state)}] {check}")
 
             print(f">>> {title}")
-            if not all(status):
+            if not all(status.values()):
                 print(">>> missing status checks!")
-                for check, state in status.items():
-                    print(f">>> [{int(state)}] {check}")
                 match asker("... open PR?"):
                     case "y":
                         run("gh", "pr", "view", "--web", number)

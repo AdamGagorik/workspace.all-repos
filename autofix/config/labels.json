@@ -28,6 +28,11 @@
     "color": "#2EAB76",
     "description": "Configuration related changes"
   },
+  "build": {
+    "alias": [],
+    "color": "#C4448E",
+    "description": "Updates where added to the build system (Makefile, etc)"
+  },
   "dependencies": {
     "alias": [],
     "color": "#1D76DB",
@@ -73,10 +78,5 @@
     ],
     "color": "#3A3D46",
     "description": "The docker image or environment must be rebuilt"
-  },
-    "build": {
-    "alias": [],
-    "color": "#C4448E",
-    "description": "Updates where added to the build system (Makefile, etc)"
   }
 }

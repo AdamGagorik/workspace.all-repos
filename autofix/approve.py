@@ -1,11 +1,11 @@
 import argparse
 import json
 import os
-import pathlib
 import subprocess
 from collections.abc import Iterator
 from functools import partial
 from itertools import chain, repeat
+from pathlib import Path
 from typing import Any, Callable
 
 
@@ -39,6 +39,7 @@ def args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-y", "--yes", action="store_true")
     parser.add_argument("--search", default="Bump OR automatic")
+    parser.add_argument("--repos", type=Path, default=Path.cwd().joinpath("repos"))
     return parser.parse_args()
 
 
@@ -53,9 +54,10 @@ def get_pr_status(pull: dict) -> Iterator[tuple[str, str]]:
 
 
 def main(opts: argparse.Namespace):
-    work = pathlib.Path.cwd()
+    work = Path.cwd()
     asker = partial(ask, always="y" if opts.yes else None)
-    repos = [p for p in work.joinpath("repos", "syapse").glob("*") if p.is_dir()]
+    repos = [p.parent for p in opts.repos.rglob(".git")]
+
     for REPO in repos:
         os.chdir(work)
         os.chdir(REPO)

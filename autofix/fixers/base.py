@@ -7,11 +7,9 @@ import logging
 class Fixer:
     options: argparse.Namespace
 
-    def apply(self):
-        ...
+    def apply(self): ...
 
-    def check(self, **kwargs):
-        ...
+    def check(self, **kwargs): ...
 
     @classmethod
     def args(cls, **kwargs):
